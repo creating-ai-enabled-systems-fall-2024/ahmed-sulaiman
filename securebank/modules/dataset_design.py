@@ -8,8 +8,16 @@ class Dataset_Designer:
         return raw_dataset
     
     def sample(self, raw_dataset: pd.DataFrame):
-        train_data, test_data = train_test_split(raw_dataset, test_size=0.2, random_state=42)
-        return [train_data, test_data]
+        customer_groups = raw_dataset.groupby('cc_num')
+
+        unique_customers = raw_dataset['cc_num'].unique()
+
+        train_customers, test_customers = train_test_split(unique_customers, test_size=0.2, random_state=42)
+
+        train_data = raw_dataset[raw_dataset['cc_num'].isin(train_customers)]
+        test_data = raw_dataset[raw_dataset['cc_num'].isin(test_customers)]
+
+        return train_data, test_data
     
     def describe(self, *args, **kwargs):
         description = {
@@ -22,6 +30,9 @@ class Dataset_Designer:
         }
         return description
     
-    def load(self, partitioned_data: list, output_filenames: list):
-        for df, filename in zip(partitioned_data, output_filenames):
+    def load(self, data: list, output_filenames: list):
+        if len(data) != len(output_filenames):
+            raise ValueError("The number of datasets and filenames must match.")
+        
+        for df, filename in zip(data, output_filenames):
             df.to_parquet(filename)

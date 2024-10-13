@@ -12,16 +12,20 @@ def capture_video(filename, drop_rate):
         frame_count += 1
     cap.release()
 
-def capture_udp_stream(stream_url):
+def capture_udp_stream(stream_url, drop_rate = 1):
     cap = cv2.VideoCapture(stream_url, cv2.CAP_FFMPEG)
+    frame_count = 0
+    if not cap.isOpened():
+        print(f"Error: Unable to open UDP stream at {stream_url}")
+        return
+
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
-        cv2.imshow('UDP Stream', frame)
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        if frame_count % drop_rate == 0:
+            yield frame
+        frame_count += 1
+
     cap.release()
-    cv2.destroyAllWindows()
 

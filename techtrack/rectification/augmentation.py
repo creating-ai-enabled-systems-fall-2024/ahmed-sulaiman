@@ -20,3 +20,18 @@ def brightness_adjust(image, alpha=1.0, beta=0):
 
 def crop(image, start_x, start_y, width, height):
     return image[start_y:start_y + height, start_x:start_x + width]
+
+def apply_augmentations(image):
+    augmented_images = []
+    
+    augmented_images.append(horizontal_flip(image))
+    
+    augmented_images.append(gaussian_blur(image))
+    
+    augmented_images.append(resize_image(image))
+    
+    augmented_images.append(adjust_brightness_contrast(image))
+    
+    augmented_images.append(rotate_image(image))
+    
+    return augmented_images

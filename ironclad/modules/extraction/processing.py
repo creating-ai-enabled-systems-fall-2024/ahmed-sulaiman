@@ -7,12 +7,10 @@ class ImageProcessor:
         self.transform = transforms.Compose([
             transforms.Resize(self.image_size),
             transforms.ToTensor(),
-            transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])  # Normalization for facenet-pytorch model
+            transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])  
         ])
     
     def preprocess_image(self, image_path):
-        # Load the image
         image = Image.open(image_path)
-        # Apply transformations: resize and normalize
         preprocessed_image = self.transform(image)
         return preprocessed_image

@@ -10,13 +10,11 @@ class EmbeddingExtractor:
         self.model = InceptionResnetV1(pretrained=model).eval().to(self.device)
        
     def extract_embedding(self, image_path):
-        # Load and preprocess image if it's a file path
         image = Image.open(image_path)
         preprocessed_image = self.__preprocess(image)
         return self.extract_embedding_tensor(preprocessed_image)
 
     def extract_embedding_tensor(self, preprocessed_image):
-        # Generate embedding from preprocessed tensor
         with torch.no_grad():
             embedding = self.model(preprocessed_image.unsqueeze(0).to(self.device)).cpu().numpy()
         return embedding

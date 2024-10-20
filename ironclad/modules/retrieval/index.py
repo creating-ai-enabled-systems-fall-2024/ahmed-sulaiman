@@ -16,5 +16,5 @@ class Indexer:
         self.index = faiss.read_index(filepath)
     
     def search(self, probe_embedding, k=5):
-        D, I = self.index.search(probe_embedding, k)  # FAISS expects a 2D array
+        D, I = self.index.search(probe_embedding, k) 
         return D, I

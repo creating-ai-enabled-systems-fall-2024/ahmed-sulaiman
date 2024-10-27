@@ -11,6 +11,10 @@ class Pipeline:
         self.extractor = EmbeddingExtractor(model=model, device=device)
         self.indexer = Indexer()
         self.gallery_filenames = []
+
+    def preprocess_image(self, file):
+        image = Image.open(io.BytesIO(file.read()))
+        return self.extractor.preprocess(image)
     
     def encode(self, image):
         if isinstance(image, torch.Tensor):
@@ -59,6 +63,15 @@ class Pipeline:
         neighbors = searcher.search_gallery(probe_embedding, k)
 
         return neighbors
+    
+    def add_to_gallery(self, image, identity):
+        embedding = self.encode(image)
+        if embedding is not None:
+            self.indexer.add_embeddings([embedding])  
+            self.gallery_filenames.append(identity)   
+            print(f"Added {identity} to the gallery.")
+        else:
+            print("Failed to generate embedding for the new identity.")
 
 
     def load_index(self, filepath='storage/catalog/faiss_index.bin'):

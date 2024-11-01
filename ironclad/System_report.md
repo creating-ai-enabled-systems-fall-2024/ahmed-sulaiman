@@ -264,6 +264,3 @@ Focused monitoring with latency and error rate tracking provides necessary insig
 #### Impact on Design
 This monitoring setup provides real-time insights, allowing prompt response to issues, ensuring reliability and performance.
 
----
-
-This comprehensive report offers detailed analysis and rationale for design decisions, fully aligning with the rubric’s requirements, covering trade-offs, evidence, and impacts across system components. The decisions made optimize performance, scalability, and user experience across diverse operational conditions.

@@ -53,6 +53,9 @@ class Reranker:
             logits = self.cross_encoder_model(**inputs).logits
             relevance_scores = logits.squeeze().tolist()
 
+        if isinstance(relevance_scores, float):
+            relevance_scores = [relevance_scores]
+
         ranked_indices = torch.argsort(torch.tensor(relevance_scores), descending=True).tolist()
         ranked_documents = [context[idx] for idx in ranked_indices]
         scores = [relevance_scores[idx] for idx in ranked_indices]

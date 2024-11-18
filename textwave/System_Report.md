@@ -7,10 +7,7 @@ The question-answering system architecture consists of three main components:
 - **Extraction Service**: Responsible for processing and embedding documents, utilizing sentence and fixed-length chunking strategies to create document embeddings.
 - **Retrieval Service**: Utilizes a FAISS index to retrieve relevant chunks for a given query. Various indexing methods (brute force, IVFPQ, HNSW) allow customization based on the required balance between accuracy and speed.
 - **Generation Service**: Uses a pre-trained language model to generate answers based on the query and retrieved context. Includes a reranking strategy to enhance the relevance of the context provided to the model.
-
-### System Diagram
-![System Architecture](link-to-diagram-image)
-
+- 
 ### Controllable Parameters
 1. **Extraction Service**:
    - `chunking_strategy`: Controls whether the text is divided by sentence or fixed length.
@@ -73,13 +70,3 @@ The question-answering system architecture consists of three main components:
    - **Alternatives**: Test with temperature settings at 0.5, 0.7, and 1.0.
    - **Evaluation**: Use user satisfaction surveys and BLEU scores to determine which setting provides the most user-friendly responses.
 
-### Analysis Summary
-
-For each design decision, we’ll generate graphs and tables showing the results of each configuration:
-- **Chunking Strategy Comparison**: A bar chart comparing Precision@k for sentence vs. fixed-length chunking.
-- **Index Type Comparison**: A line chart of latency vs. Precision@k for each index type.
-- **Effect of `k` on Answer Quality**: A plot of BLEU scores vs. `k`.
-- **Reranking Strategy Impact**: A bar chart comparing answer accuracy and latency with and without reranking.
-- **Temperature Setting**: A user satisfaction vs. BLEU score plot for different temperature values.
-
-The analysis will inform which configurations yield optimal performance in speed, relevance, and user satisfaction. Each design decision will be backed by this empirical data to guide the final system design.
